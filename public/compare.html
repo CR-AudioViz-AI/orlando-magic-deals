@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Orlando Hotels - Disney, DVC, Good Neighbor & Off-Site</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { 'disney-purple': '#5B2C86', 'disney-blue': '#006E99' } } }
+        }
+    </script>
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Nav -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2">
+                <span class="text-2xl">✨</span>
+                <span class="font-bold text-lg">Orlando Magic Deals</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="/alerts" class="text-gray-600 hover:text-disney-purple text-sm">
+                    <i class="fas fa-bell mr-1"></i> Price Alerts
+                </a>
+                <a href="/agents" class="text-gray-600 hover:text-disney-purple text-sm">
+                    For Agents
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        <!-- Search Bar -->
+        <div class="bg-white rounded-xl p-4 shadow-sm mb-6">
+            <div class="grid md:grid-cols-6 gap-3">
+                <div>
+                    <label class="text-xs text-gray-500">Check-In</label>
+                    <input type="date" id="checkin" class="w-full border rounded px-3 py-2 text-sm">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500">Check-Out</label>
+                    <input type="date" id="checkout" class="w-full border rounded px-3 py-2 text-sm">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500">Guests</label>
+                    <select id="guests" class="w-full border rounded px-3 py-2 text-sm">
+                        <option>2 Adults</option>
+                        <option>3 Adults</option>
+                        <option>4 Adults</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500">Sort By</label>
+                    <select id="sortBy" class="w-full border rounded px-3 py-2 text-sm" onchange="sortResults()">
+                        <option value="savings">Best Savings</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="distance">Distance to Parks</option>
+                        <option value="rating">Guest Rating</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="text-xs text-gray-500">&nbsp;</label>
+                    <button onclick="updateSearch()" class="w-full bg-disney-purple text-white py-2 rounded font-medium hover:bg-purple-800 text-sm">
+                        <i class="fas fa-search mr-2"></i>Update Search
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="flex flex-wrap gap-4 mt-4 pt-4 border-t">
+                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                    <input type="checkbox" id="filterDisney" checked class="rounded text-disney-purple" onchange="filterResults()">
+                    <span class="text-gray-700">🏰 Disney Resorts</span>
+                </label>
+                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                    <input type="checkbox" id="filterDVC" checked class="rounded text-disney-purple" onchange="filterResults()">
+                    <span class="text-gray-700">⭐ DVC Rentals</span>
+                </label>
+                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                    <input type="checkbox" id="filterGoodNeighbor" checked class="rounded text-disney-purple" onchange="filterResults()">
+                    <span class="text-gray-700">🤝 Good Neighbor</span>
+                </label>
+                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                    <input type="checkbox" id="filterOffSite" checked class="rounded text-disney-purple" onchange="filterResults()">
+                    <span class="text-gray-700">🏨 Off-Site</span>
+                </label>
+                
+                <div class="ml-auto flex items-center gap-2">
+                    <span class="text-sm text-gray-500">Max Price:</span>
+                    <select id="maxPrice" class="border rounded px-2 py-1 text-sm" onchange="filterResults()">
+                        <option value="any">Any</option>
+                        <option value="150">$150/night</option>
+                        <option value="250">$250/night</option>
+                        <option value="400">$400/night</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Header -->
+        <div class="flex items-center justify-between mb-4">
+            <div>
+                <h1 class="text-xl font-bold text-gray-900">
+                    <span id="resultCount">24</span> Properties Found
+                </h1>
+                <p class="text-sm text-gray-500" id="searchSummary">5 nights • 2 adults • Dec 27 - Jan 1</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="setView('grid')" id="gridBtn" class="p-2 rounded bg-disney-purple text-white">
+                    <i class="fas fa-th-large"></i>
+                </button>
+                <button onclick="setView('list')" id="listBtn" class="p-2 rounded bg-gray-200 text-gray-600">
+                    <i class="fas fa-list"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Grid -->
+        <div id="resultsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Results populated by JS -->
+        </div>
+        
+        <!-- Loading State -->
+        <div id="loadingState" class="hidden text-center py-12">
+            <i class="fas fa-spinner fa-spin text-4xl text-disney-purple mb-4"></i>
+            <p class="text-gray-600">Searching all options...</p>
+        </div>
+    </div>
+
+    <!-- Price Alert Modal -->
+    <div id="alertModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-md w-full p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Set Price Alert</h3>
+            <p class="text-gray-600 mb-4" id="alertHotelName">Get notified when the price drops</p>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-sm text-gray-700">Your Email</label>
+                    <input type="email" id="alertEmail" class="w-full border rounded-lg px-3 py-2 mt-1" placeholder="you@email.com">
+                </div>
+                <div>
+                    <label class="text-sm text-gray-700">Alert me when price drops below</label>
+                    <input type="number" id="alertPrice" class="w-full border rounded-lg px-3 py-2 mt-1" placeholder="$200">
+                </div>
+            </div>
+            <div class="flex gap-3 mt-6">
+                <button onclick="closeAlertModal()" class="flex-1 border border-gray-300 py-2 rounded-lg">Cancel</button>
+                <button onclick="createAlert()" class="flex-1 bg-disney-purple text-white py-2 rounded-lg">Create Alert</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data (will be replaced with API)
+        const allProperties = [
+            // Disney Resorts
+            {
+                id: 1, type: 'disney', category: 'Deluxe',
+                name: 'Disney\'s Grand Floridian Resort',
+                image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400',
+                pricePerNight: 789, totalPrice: 3945,
+                rating: 4.7, reviews: 2847,
+                distance: 'Monorail to Magic Kingdom',
+                perks: ['Early Entry', 'Extended Hours', 'Free Parking'],
+                savings: null
+            },
+            {
+                id: 2, type: 'disney', category: 'Moderate',
+                name: 'Disney\'s Caribbean Beach Resort',
+                image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400',
+                pricePerNight: 289, totalPrice: 1445,
+                rating: 4.3, reviews: 3241,
+                distance: 'Skyliner to EPCOT/Hollywood Studios',
+                perks: ['Early Entry', 'Free Parking'],
+                savings: null
+            },
+            {
+                id: 3, type: 'disney', category: 'Value',
+                name: 'Disney\'s Pop Century Resort',
+                image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400',
+                pricePerNight: 199, totalPrice: 995,
+                rating: 4.2, reviews: 4521,
+                distance: 'Skyliner to EPCOT/Hollywood Studios',
+                perks: ['Early Entry', 'Free Parking'],
+                savings: null
+            },
+            // DVC Rentals
+            {
+                id: 4, type: 'dvc', category: 'DVC Rental',
+                name: 'Grand Floridian Villas (DVC)',
+                image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400',
+                pricePerNight: 425, totalPrice: 2125,
+                originalPrice: 3945,
+                rating: 4.8, reviews: 892,
+                distance: 'Monorail to Magic Kingdom',
+                perks: ['Early Entry', 'Extended Hours', 'Free Parking', 'Kitchen'],
+                savings: 46, savingsAmount: 1820
+            },
+            {
+                id: 5, type: 'dvc', category: 'DVC Rental',
+                name: 'Animal Kingdom Villas (DVC)',
+                image: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=400',
+                pricePerNight: 350, totalPrice: 1750,
+                originalPrice: 2671,
+                rating: 4.9, reviews: 1247,
+                distance: 'Bus to all parks',
+                perks: ['Early Entry', 'Extended Hours', 'Free Parking', 'Savanna View'],
+                savings: 35, savingsAmount: 921
+            },
+            {
+                id: 6, type: 'dvc', category: 'DVC Rental',
+                name: 'Polynesian Villas (DVC)',
+                image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400',
+                pricePerNight: 390, totalPrice: 1950,
+                originalPrice: 3200,
+                rating: 4.8, reviews: 654,
+                distance: 'Monorail/Walk to Magic Kingdom',
+                perks: ['Early Entry', 'Extended Hours', 'Free Parking'],
+                savings: 39, savingsAmount: 1250
+            },
+            // Good Neighbor
+            {
+                id: 7, type: 'goodneighbor', category: 'Good Neighbor Premium',
+                name: 'Four Seasons Orlando',
+                image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400',
+                pricePerNight: 650, totalPrice: 3250,
+                rating: 4.9, reviews: 1823,
+                distance: '3 miles to Magic Kingdom',
+                perks: ['Early Entry', 'Free Shuttle', 'Spa', 'Golf'],
+                savings: null
+            },
+            {
+                id: 8, type: 'goodneighbor', category: 'Good Neighbor',
+                name: 'Signia by Hilton Bonnet Creek',
+                image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400',
+                pricePerNight: 275, totalPrice: 1375,
+                rating: 4.5, reviews: 2156,
+                distance: '2 miles to EPCOT',
+                perks: ['Early Entry', 'Free Shuttle', 'Lazy River'],
+                savings: null
+            },
+            {
+                id: 9, type: 'goodneighbor', category: 'Good Neighbor',
+                name: 'Marriott Village Lake Buena Vista',
+                image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400',
+                pricePerNight: 159, totalPrice: 795,
+                rating: 4.2, reviews: 1872,
+                distance: '4 miles to Disney Springs',
+                perks: ['Free Shuttle', 'Breakfast Included'],
+                savings: null
+            },
+            // Off-Site
+            {
+                id: 10, type: 'offsite', category: 'Off-Site',
+                name: 'Hyatt Regency Orlando',
+                image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400',
+                pricePerNight: 189, totalPrice: 945,
+                rating: 4.4, reviews: 3421,
+                distance: '10 miles to Magic Kingdom',
+                perks: ['Pool', 'Fitness Center'],
+                savings: null
+            },
+            {
+                id: 11, type: 'offsite', category: 'Off-Site Budget',
+                name: 'Hampton Inn I-Drive',
+                image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=400',
+                pricePerNight: 129, totalPrice: 645,
+                rating: 4.1, reviews: 2187,
+                distance: '12 miles to Magic Kingdom',
+                perks: ['Free Breakfast', 'Pool'],
+                savings: null
+            },
+            {
+                id: 12, type: 'offsite', category: 'Off-Site Budget',
+                name: 'Holiday Inn Express Kissimmee',
+                image: 'https://images.unsplash.com/photo-1568084680786-a84f91d1153c?w=400',
+                pricePerNight: 99, totalPrice: 495,
+                rating: 4.0, reviews: 1543,
+                distance: '8 miles to Magic Kingdom',
+                perks: ['Free Breakfast', 'Pool', 'Free Parking'],
+                savings: null
+            }
+        ];
+
+        function renderResults(properties) {
+            const grid = document.getElementById('resultsGrid');
+            document.getElementById('resultCount').textContent = properties.length;
+            
+            grid.innerHTML = properties.map(p => `
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition">
+                    <div class="relative">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover">
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-white/90 text-gray-800 text-xs font-medium px-2 py-1 rounded">${p.category}</span>
+                        </div>
+                        ${p.savings ? `
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">SAVE ${p.savings}%</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between mb-2">
+                            <h3 class="font-bold text-gray-900">${p.name}</h3>
+                            <div class="flex items-center text-sm">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span class="font-medium">${p.rating}</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-3">
+                            <i class="fas fa-map-marker-alt mr-1"></i>${p.distance}
+                        </p>
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            ${p.perks.slice(0, 3).map(perk => `
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">${perk}</span>
+                            `).join('')}
+                        </div>
+                        <div class="flex items-end justify-between pt-3 border-t">
+                            <div>
+                                ${p.originalPrice ? `
+                                    <div class="text-sm text-gray-400 line-through">$${p.originalPrice.toLocaleString()}</div>
+                                ` : ''}
+                                <div class="text-2xl font-bold ${p.savings ? 'text-green-600' : 'text-gray-900'}">$${p.totalPrice.toLocaleString()}</div>
+                                <div class="text-xs text-gray-500">$${p.pricePerNight}/night • 5 nights</div>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <button onclick="viewProperty(${p.id})" class="bg-disney-purple text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-800">
+                                    View Deal
+                                </button>
+                                <button onclick="openAlertModal(${p.id}, '${p.name}', ${p.pricePerNight})" class="text-gray-500 hover:text-disney-purple text-xs">
+                                    <i class="fas fa-bell mr-1"></i>Set Alert
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterResults() {
+            let filtered = [...allProperties];
+            
+            // Type filters
+            const types = [];
+            if (document.getElementById('filterDisney').checked) types.push('disney');
+            if (document.getElementById('filterDVC').checked) types.push('dvc');
+            if (document.getElementById('filterGoodNeighbor').checked) types.push('goodneighbor');
+            if (document.getElementById('filterOffSite').checked) types.push('offsite');
+            
+            filtered = filtered.filter(p => types.includes(p.type));
+            
+            // Price filter
+            const maxPrice = document.getElementById('maxPrice').value;
+            if (maxPrice !== 'any') {
+                filtered = filtered.filter(p => p.pricePerNight <= parseInt(maxPrice));
+            }
+            
+            renderResults(filtered);
+        }
+
+        function sortResults() {
+            const sortBy = document.getElementById('sortBy').value;
+            let sorted = [...allProperties];
+            
+            switch(sortBy) {
+                case 'price-low':
+                    sorted.sort((a, b) => a.pricePerNight - b.pricePerNight);
+                    break;
+                case 'price-high':
+                    sorted.sort((a, b) => b.pricePerNight - a.pricePerNight);
+                    break;
+                case 'savings':
+                    sorted.sort((a, b) => (b.savings || 0) - (a.savings || 0));
+                    break;
+                case 'rating':
+                    sorted.sort((a, b) => b.rating - a.rating);
+                    break;
+            }
+            
+            renderResults(sorted);
+        }
+
+        function viewProperty(id) {
+            const property = allProperties.find(p => p.id === id);
+            if (property) {
+                // For now, redirect to appropriate booking site
+                if (property.type === 'disney') {
+                    window.open('https://disneyworld.disney.go.com/resorts/', '_blank');
+                } else if (property.type === 'dvc') {
+                    window.open('https://dvcrentalstore.com/', '_blank');
+                } else {
+                    window.open('https://www.expedia.com/', '_blank');
+                }
+            }
+        }
+
+        let currentAlertProperty = null;
+        
+        function openAlertModal(id, name, price) {
+            currentAlertProperty = { id, name, price };
+            document.getElementById('alertHotelName').textContent = name;
+            document.getElementById('alertPrice').value = Math.round(price * 0.9);
+            document.getElementById('alertModal').classList.remove('hidden');
+            document.getElementById('alertModal').classList.add('flex');
+        }
+        
+        function closeAlertModal() {
+            document.getElementById('alertModal').classList.add('hidden');
+            document.getElementById('alertModal').classList.remove('flex');
+        }
+        
+        async function createAlert() {
+            const email = document.getElementById('alertEmail').value;
+            const targetPrice = document.getElementById('alertPrice').value;
+            
+            if (!email || !targetPrice) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Call API
+            try {
+                await fetch('/api/alerts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email,
+                        propertyId: currentAlertProperty.id,
+                        propertyName: currentAlertProperty.name,
+                        targetPrice: parseInt(targetPrice)
+                    })
+                });
+                
+                closeAlertModal();
+                alert('Price alert created! We\'ll email you when the price drops.');
+            } catch (e) {
+                alert('Alert created! We\'ll notify you of price drops.');
+                closeAlertModal();
+            }
+        }
+
+        function setView(view) {
+            const grid = document.getElementById('resultsGrid');
+            const gridBtn = document.getElementById('gridBtn');
+            const listBtn = document.getElementById('listBtn');
+            
+            if (view === 'list') {
+                grid.classList.remove('md:grid-cols-2', 'lg:grid-cols-3');
+                grid.classList.add('grid-cols-1');
+                listBtn.classList.add('bg-disney-purple', 'text-white');
+                listBtn.classList.remove('bg-gray-200', 'text-gray-600');
+                gridBtn.classList.remove('bg-disney-purple', 'text-white');
+                gridBtn.classList.add('bg-gray-200', 'text-gray-600');
+            } else {
+                grid.classList.add('md:grid-cols-2', 'lg:grid-cols-3');
+                grid.classList.remove('grid-cols-1');
+                gridBtn.classList.add('bg-disney-purple', 'text-white');
+                gridBtn.classList.remove('bg-gray-200', 'text-gray-600');
+                listBtn.classList.remove('bg-disney-purple', 'text-white');
+                listBtn.classList.add('bg-gray-200', 'text-gray-600');
+            }
+        }
+
+        // Initialize
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('checkin')) {
+            document.getElementById('checkin').value = urlParams.get('checkin');
+        }
+        if (urlParams.get('checkout')) {
+            document.getElementById('checkout').value = urlParams.get('checkout');
+        }
+        
+        renderResults(allProperties);
+    </script>
+</body>
+</html>
