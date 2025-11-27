@@ -1,0 +1,14 @@
+{
+  "name": "orlando-magic-deals",
+  "version": "1.0.0",
+  "description": "Complete Orlando/Disney travel comparison platform",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "author": "CR AudioViz AI, LLC",
+  "license": "UNLICENSED"
+}
