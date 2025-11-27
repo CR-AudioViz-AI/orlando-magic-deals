@@ -28,6 +28,25 @@
         .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.15); }
         .pulse-badge { animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        
+        /* Fix date input display */
+        input[type="date"] {
+            color: #374151;
+            background-color: white;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            opacity: 0.6;
+        }
+        input[type="date"]::-webkit-datetime-edit {
+            color: #374151;
+        }
+        input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+            color: #374151;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -87,15 +106,15 @@
                 <div class="grid md:grid-cols-5 gap-4 mb-4">
                     <div class="md:col-span-1">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Check-In</label>
-                        <input type="date" id="checkin" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-disney-purple focus:border-disney-purple">
+                        <input type="date" id="checkin" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-gray-700 bg-white focus:ring-2 focus:ring-disney-purple focus:border-disney-purple">
                     </div>
                     <div class="md:col-span-1">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Check-Out</label>
-                        <input type="date" id="checkout" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-disney-purple focus:border-disney-purple">
+                        <input type="date" id="checkout" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-gray-700 bg-white focus:ring-2 focus:ring-disney-purple focus:border-disney-purple">
                     </div>
                     <div class="md:col-span-1">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Guests</label>
-                        <select id="guests" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-disney-purple">
+                        <select id="guests" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-gray-700 bg-white focus:ring-2 focus:ring-disney-purple">
                             <option value="2">2 Adults</option>
                             <option value="3">3 Adults</option>
                             <option value="4">4 Adults</option>
@@ -104,7 +123,7 @@
                     </div>
                     <div class="md:col-span-1">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Budget</label>
-                        <select id="budget" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-disney-purple">
+                        <select id="budget" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-gray-700 bg-white focus:ring-2 focus:ring-disney-purple">
                             <option value="any">Any Budget</option>
                             <option value="100">Under $100/night</option>
                             <option value="200">Under $200/night</option>
@@ -119,6 +138,14 @@
                             Search
                         </button>
                     </div>
+                </div>
+                
+                <!-- Selected Dates Display -->
+                <div id="selectedDatesDisplay" class="bg-purple-50 rounded-lg p-3 mb-4 hidden">
+                    <p class="text-sm text-disney-purple font-medium">
+                        <i class="fas fa-calendar-check mr-2"></i>
+                        <span id="dateRangeText"></span>
+                    </p>
                 </div>
                 
                 <!-- Property Type Filters -->
@@ -344,7 +371,7 @@
                 <a href="/agents" class="bg-white text-disney-purple px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
                     Learn More
                 </a>
-                <a href="/agents/signup" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition">
+                <a href="/agents#apply" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition">
                     Apply Now - Free Trial
                 </a>
             </div>
@@ -415,7 +442,7 @@
                         </div>
                     </div>
                     <div class="flex gap-2">
-                        <input type="text" placeholder="Ask about hotels, pricing, tips..." class="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm">
+                        <input type="text" placeholder="Ask about hotels, pricing, tips..." class="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-700">
                         <button class="bg-disney-purple text-white px-4 py-2 rounded-lg">
                             <i class="fas fa-paper-plane"></i>
                         </button>
@@ -579,7 +606,7 @@
             <div class="p-4 border-t bg-white rounded-b-2xl">
                 <div class="flex gap-2">
                     <input type="text" id="javariInput" placeholder="Ask about hotels, pricing, tips..." 
-                        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-disney-purple"
+                        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-disney-purple"
                         onkeypress="if(event.key==='Enter')sendToJavari()">
                     <button onclick="sendToJavari()" class="bg-disney-purple text-white px-4 py-2 rounded-lg hover:bg-purple-800">
                         <i class="fas fa-paper-plane"></i>
@@ -597,8 +624,42 @@
         const checkoutDate = new Date(checkinDate);
         checkoutDate.setDate(checkinDate.getDate() + 5);
         
-        document.getElementById('checkin').valueAsDate = checkinDate;
-        document.getElementById('checkout').valueAsDate = checkoutDate;
+        // Format dates for input
+        const formatDate = (date) => date.toISOString().split('T')[0];
+        const formatDisplayDate = (date) => date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        
+        // Set values
+        document.getElementById('checkin').value = formatDate(checkinDate);
+        document.getElementById('checkout').value = formatDate(checkoutDate);
+        
+        // Update display
+        function updateDateDisplay() {
+            const checkinVal = document.getElementById('checkin').value;
+            const checkoutVal = document.getElementById('checkout').value;
+            
+            if (checkinVal && checkoutVal) {
+                const checkin = new Date(checkinVal + 'T00:00:00');
+                const checkout = new Date(checkoutVal + 'T00:00:00');
+                const nights = Math.round((checkout - checkin) / (1000 * 60 * 60 * 24));
+                
+                const displayDiv = document.getElementById('selectedDatesDisplay');
+                const textSpan = document.getElementById('dateRangeText');
+                
+                if (nights > 0) {
+                    textSpan.textContent = `${formatDisplayDate(checkin)} - ${formatDisplayDate(checkout)} (${nights} night${nights > 1 ? 's' : ''})`;
+                    displayDiv.classList.remove('hidden');
+                } else {
+                    displayDiv.classList.add('hidden');
+                }
+            }
+        }
+        
+        // Add event listeners
+        document.getElementById('checkin').addEventListener('change', updateDateDisplay);
+        document.getElementById('checkout').addEventListener('change', updateDateDisplay);
+        
+        // Initial display
+        updateDateDisplay();
 
         // Search hotels
         function searchHotels() {
@@ -606,6 +667,12 @@
             const checkout = document.getElementById('checkout').value;
             const guests = document.getElementById('guests').value;
             const budget = document.getElementById('budget').value;
+            
+            // Validate dates
+            if (!checkin || !checkout) {
+                alert('Please select check-in and check-out dates');
+                return;
+            }
             
             // Build filter string
             let filters = [];
