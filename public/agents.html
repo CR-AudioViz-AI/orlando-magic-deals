@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Agent Partner Program - Orlando Magic Deals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { 'disney-purple': '#5B2C86' } } }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Nav -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2">
+                <span class="text-2xl">✨</span>
+                <span class="font-bold text-lg">Orlando Magic Deals</span>
+            </a>
+            <a href="/agents/login" class="bg-disney-purple text-white px-4 py-2 rounded-lg text-sm font-medium">
+                Agent Login
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="bg-gradient-to-r from-disney-purple to-purple-900 text-white py-20">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full text-sm mb-6">
+                <i class="fas fa-briefcase"></i>
+                Travel Agent Partner Program
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                Grow Your Business With Orlando's Best Deals
+            </h1>
+            <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                Access exclusive rates, white-label booking tools, and earn competitive commissions 
+                on every Orlando vacation you book.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#pricing" class="bg-white text-disney-purple px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+                    View Plans & Pricing
+                </a>
+                <a href="#apply" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition">
+                    Apply Now - Free Trial
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Why Partner With Us?</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-dollar-sign text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Competitive Commissions</h3>
+                    <p class="text-gray-600">Earn up to 12% on hotel bookings. Higher tiers unlock better rates.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-tools text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">White-Label Tools</h3>
+                    <p class="text-gray-600">Embed our search on your site with your branding. Clients book through you.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-hotel text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Exclusive Inventory</h3>
+                    <p class="text-gray-600">Disney, DVC rentals, Good Neighbor, and 700K+ off-site properties.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-16 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Agent Portal Features</h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-disney-purple/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-search text-disney-purple"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 mb-1">Multi-Source Search</h3>
+                            <p class="text-gray-600 text-sm">Search Disney, DVC, Good Neighbor, and all off-site hotels in one place. Compare prices instantly.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-disney-purple/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-file-invoice-dollar text-disney-purple"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 mb-1">Instant Quotes</h3>
+                            <p class="text-gray-600 text-sm">Generate professional PDF quotes with your branding. Email directly to clients.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-disney-purple/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-users text-disney-purple"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 mb-1">Client Management</h3>
+                            <p class="text-gray-600 text-sm">Track client bookings, preferences, and travel history. Set reminders and follow-ups.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-disney-purple/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-chart-line text-disney-purple"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 mb-1">Commission Dashboard</h3>
+                            <p class="text-gray-600 text-sm">Track your earnings in real-time. See pending, confirmed, and paid commissions.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-disney-purple/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-code text-disney-purple"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 mb-1">API Access</h3>
+                            <p class="text-gray-600 text-sm">Build custom integrations with our REST API. Pro and Enterprise plans only.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-disney-purple/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-headset text-disney-purple"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 mb-1">Priority Support</h3>
+                            <p class="text-gray-600 text-sm">Dedicated agent support line. Get help within hours, not days.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="py-16 bg-white" id="pricing">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">Simple, Transparent Pricing</h2>
+            <p class="text-center text-gray-600 mb-12">Start free, upgrade as you grow</p>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Starter -->
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+                    <div class="text-center mb-6">
+                        <h3 class="text-lg font-bold text-gray-900">Starter</h3>
+                        <div class="mt-4">
+                            <span class="text-4xl font-bold text-gray-900">$0</span>
+                            <span class="text-gray-500">/month</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">Perfect for getting started</p>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500"></i>
+                            5% base commission
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500"></i>
+                            Unlimited searches
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500"></i>
+                            Up to 10 bookings/month
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500"></i>
+                            Basic quote generator
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-400">
+                            <i class="fas fa-times"></i>
+                            White-label tools
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-400">
+                            <i class="fas fa-times"></i>
+                            API access
+                        </li>
+                    </ul>
+                    <a href="#apply" class="block w-full text-center border border-gray-300 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-100">
+                        Start Free
+                    </a>
+                </div>
+
+                <!-- Pro - Highlighted -->
+                <div class="bg-disney-purple rounded-2xl p-6 text-white relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full">
+                        MOST POPULAR
+                    </div>
+                    <div class="text-center mb-6">
+                        <h3 class="text-lg font-bold">Pro</h3>
+                        <div class="mt-4">
+                            <span class="text-4xl font-bold">$49</span>
+                            <span class="text-white/70">/month</span>
+                        </div>
+                        <p class="text-sm text-white/70 mt-2">For growing agencies</p>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-yellow-400"></i>
+                            8% base commission
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-yellow-400"></i>
+                            Unlimited searches
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-yellow-400"></i>
+                            Unlimited bookings
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-yellow-400"></i>
+                            Branded quote PDFs
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-yellow-400"></i>
+                            White-label search widget
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <i class="fas fa-check text-yellow-400"></i>
+                            Client management
+                        </li>
+                    </ul>
+                    <a href="#apply" class="block w-full text-center bg-white text-disney-purple py-2 rounded-lg font-medium hover:bg-gray-100">
+                        Start 14-Day Trial
+                    </a>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+                    <div class="text-center mb-6">
+                        <h3 class="text-lg font-bold text-gray-900">Enterprise</h3>
+                        <div class="mt-4">
+                            <span class="text-4xl font-bold text-gray-900">$199</span>
+                            <span class="text-gray-500">/month</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">For large agencies</p>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500"></i>
+                            12% base commission
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500"></i>
+                            Everything in Pro
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500"></i>
+                            Full API access
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500"></i>
+                            Multi-agent accounts
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500"></i>
+                            Dedicated account manager
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-check text-green-500"></i>
+                            Custom integrations
+                        </li>
+                    </ul>
+                    <a href="#apply" class="block w-full text-center border border-gray-300 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-100">
+                        Contact Sales
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form -->
+    <section class="py-16 bg-gray-100" id="apply">
+        <div class="max-w-xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">Apply to Join</h2>
+            <p class="text-center text-gray-600 mb-8">Fill out the form below and we'll get back to you within 48 hours</p>
+            
+            <form id="agentForm" class="bg-white rounded-xl p-6 shadow-sm">
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
+                        <input type="text" required class="w-full border rounded-lg px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
+                        <input type="text" required class="w-full border rounded-lg px-3 py-2">
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                    <input type="email" required class="w-full border rounded-lg px-3 py-2">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Agency Name</label>
+                    <input type="text" class="w-full border rounded-lg px-3 py-2">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Agency Website</label>
+                    <input type="url" class="w-full border rounded-lg px-3 py-2" placeholder="https://">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Credentials (IATA, ARC, CLIA, etc.)</label>
+                    <input type="text" class="w-full border rounded-lg px-3 py-2">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">How many Orlando bookings do you do per month?</label>
+                    <select class="w-full border rounded-lg px-3 py-2">
+                        <option>1-5</option>
+                        <option>6-15</option>
+                        <option>16-30</option>
+                        <option>30+</option>
+                    </select>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Which plan are you interested in?</label>
+                    <select class="w-full border rounded-lg px-3 py-2">
+                        <option>Starter (Free)</option>
+                        <option>Pro ($49/month)</option>
+                        <option>Enterprise ($199/month)</option>
+                        <option>Not sure yet</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="w-full bg-disney-purple text-white py-3 rounded-lg font-semibold hover:bg-purple-800 transition">
+                    Submit Application
+                </button>
+                
+                <p class="text-xs text-gray-500 text-center mt-4">
+                    By applying, you agree to our <a href="/terms" class="underline">Terms of Service</a> and <a href="/privacy" class="underline">Privacy Policy</a>
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">✨</span>
+                    <span class="font-bold">Orlando Magic Deals</span>
+                    <span class="text-gray-500 text-sm">by CR AudioViz AI</span>
+                </div>
+                <div class="flex items-center gap-6 text-sm text-gray-400">
+                    <a href="/" class="hover:text-white">Home</a>
+                    <a href="/agents/login" class="hover:text-white">Agent Login</a>
+                    <a href="/contact" class="hover:text-white">Contact</a>
+                </div>
+            </div>
+            <p class="text-center text-gray-500 text-xs mt-8">
+                © 2025 CR AudioViz AI, LLC. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('agentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            alert('Thank you for your application! We\'ll review it and get back to you within 48 hours.');
+        });
+    </script>
+</body>
+</html>
