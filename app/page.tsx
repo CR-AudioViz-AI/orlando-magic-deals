@@ -3,7 +3,7 @@ export default function OrlandoHome() {
     <div style={{minHeight:"100vh",background:"#040912",color:"#e2e8f0",fontFamily:"system-ui"}}>
       <nav style={{background:"#1E3A5F",padding:"0 20px",height:52,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
         <span style={{fontWeight:900,color:"#FF0800",fontSize:16}}>🏰 Orlando Trip Deals</span>
-        <a href="https://craudiovizai.com/auth/signup" style={{background:"#FF0800",color:"#fff",borderRadius:7,padding:"5px 16px",fontSize:13,fontWeight:700,textDecoration:"none"}}>Start Free</a>
+        <a href="https://craudiovizai.com/auth/signup" style={{background:"#FF0800",color:"#fff",borderRadius:7,padding:"5px 16px",fontSize:13,fontWeight:700,textDecoration:"none"}}>Get Started</a>
       </nav>
       <section style={{textAlign:"center",padding:"72px 24px"}}>
         <div style={{fontSize:64,marginBottom:16}}>🏰</div>
